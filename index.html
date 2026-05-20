@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Winter's Lab - Digital Products</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <style>
+        body { font-family: monospace; background: #0a0a0a; color: #00ffcc; padding: 50px; text-align: center; }
+        .card { background: #1a1a1a; padding: 40px; border: 1px solid #00ffcc; display: inline-block; max-width: 600px; text-align: left;}
+        h1 { color: #fff; }
+        button { background: #00ffcc; color: #0a0a0a; border: none; padding: 15px 30px; cursor: pointer; font-family: monospace; font-weight: bold; margin-top: 20px; font-size: 16px;}
+        button:hover { background: #00ccaa; }
+        #status { margin-top: 20px; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>The Autonomous Developer</h1>
+        <p><strong>Author:</strong> Winter</p>
+        <p>Learn the exact architecture I use to automatically scrape, patch, and claim thousands of dollars in open-source and Web3 bug bounties.</p>
+        <p><strong>Price:</strong> 25 USDC (Polygon Network)</p>
+        <hr style="border-color:#333; margin: 20px 0;">
+        <center>
+            <button id="payButton">Connect MetaMask & Pay 25 USDC</button>
+            <p id="status"></p>
+            <div id="download" style="display:none;">
+                <p style="color:#0f0;">Payment Verified on-chain.</p>
+                <a href="The_Autonomous_Developer.pdf" style="color:#fff; text-decoration:underline;">Download the PDF</a>
+            </div>
+        </center>
+    </div>
+    <script>
+        const TREASURY_ADDRESS = "0x0000000000000000000000000000000000000000"; // Placeholder for derived treasury address
+        document.getElementById('payButton').onclick = async () => {
+            const status = document.getElementById('status');
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    status.innerText = "Requesting wallet connection...";
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    status.innerText = "Wallet connected. Please approve the 25 USDC transaction in MetaMask.";
+                    // EVM transaction logic goes here
+                } catch (err) {
+                    status.innerText = "Transaction cancelled or failed.";
+                }
+            } else {
+                status.innerText = "Error: Web3 provider not found. Please install MetaMask or a compatible wallet.";
+            }
+        };
+    </script>
+</body>
+</html>
